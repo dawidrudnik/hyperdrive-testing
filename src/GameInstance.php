@@ -7,39 +7,35 @@ namespace Hyperdrive;
 use Hyperdrive\GalaxyAtlas\GalaxyAtlas;
 use Hyperdrive\GalaxyAtlas\GalaxyAtlasBuilder;
 use Hyperdrive\Geography\Planet;
-use Hyperdrive\Navigator\HyperdriveNavigator;
+use Hyperdrive\Player\Player;
 use League\CLImate\CLImate;
 
 class GameInstance
 {
     protected CLImate $cli;
     protected GalaxyAtlas $atlas;
-    protected HyperdriveNavigator $navigator;
-    protected Planet $targetPlanet;
-    protected Planet $currentPlanet;
+    protected Player $player;
 
     public function __construct(private string $filePath = "./resources/routes.yaml")
     {
         $this->cli = new CLImate();
         $this->atlas = GalaxyAtlasBuilder::buildFromYaml($this->filePath);
-        $this->navigator = new HyperdriveNavigator($this->atlas);
-        $this->targetPlanet = $this->navigator->getRandomPlanet();
-        $this->currentPlanet = $this->navigator->getRandomPlanet();
+        $this->player = new Player("Dawid", $this->atlas);
     }
 
     public function start(): void
     {
-        $this->cli->info("Your target is the {$this->targetPlanet}.");
+        $this->cli->info("Your target is the {$this->player->getTargetPlanet()}.");
 
         while (true) {
-            if ($this->currentPlanet === $this->targetPlanet) {
-                $this->cli->info("You reached the {$this->targetPlanet}!");
+            if ($this->player->checkPlanetsEquals()) {
+                $this->cli->info("You reached the {$this->player->getTargetPlanet()}!");
                 break;
             }
 
-            $this->cli->info("You're on the {$this->currentPlanet}. You can jump to:");
+            $this->cli->info("You're on the {$this->player->getCurrentPlanet()}. You can jump to:");
 
-            $options = $this->currentPlanet->getNeighbours()->toArray() + [
+            $options = $this->player->getCurrentPlanet()->getNeighbours()->toArray() + [
                 "more" => "[show more option]",
             ];
             $result = $this->selectOption("Select jump target planet", $options);
@@ -57,8 +53,7 @@ class GameInstance
                 continue;
             }
 
-            $this->navigator->jumpTo($result);
-            $this->currentPlanet = $this->navigator->getCurrentPlanet();
+            $this->player->jumpToPlanet($result);
         }
     }
 
