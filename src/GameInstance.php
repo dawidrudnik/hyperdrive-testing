@@ -5,22 +5,22 @@ declare(strict_types=1);
 namespace Hyperdrive;
 
 use Hyperdrive\GalaxyAtlas\GalaxyAtlas;
-use Hyperdrive\GalaxyAtlas\GalaxyAtlasBuilder;
 use Hyperdrive\Geography\Planet;
 use Hyperdrive\Player\Player;
+use Hyperdrive\Player\PlayerProfile;
 use League\CLImate\CLImate;
 
 class GameInstance
 {
     protected CLImate $cli;
-    protected GalaxyAtlas $atlas;
     protected Player $player;
+    protected GalaxyAtlas $atlas;
 
-    public function __construct(private string $filePath = "./resources/routes.yaml")
+    public function __construct(GalaxyAtlas $atlas, PlayerProfile $playerProfile)
     {
+        $this->atlas = $atlas;
         $this->cli = new CLImate();
-        $this->atlas = GalaxyAtlasBuilder::buildFromYaml($this->filePath);
-        $this->player = new Player("Dawid", $this->atlas);
+        $this->player = new Player($playerProfile, $atlas);
     }
 
     public function start(): void

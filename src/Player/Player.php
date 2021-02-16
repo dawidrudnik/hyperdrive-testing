@@ -7,25 +7,27 @@ namespace Hyperdrive\Player;
 use Hyperdrive\GalaxyAtlas\GalaxyAtlas;
 use Hyperdrive\Geography\Planet;
 use Hyperdrive\Navigator\HyperdriveNavigator;
+use JetBrains\PhpStorm\Pure;
 
 class Player
 {
-    protected string $name;
+    protected PlayerProfile $profile;
     protected Planet $targetPlanet;
     protected Planet $currentPlanet;
     protected HyperdriveNavigator $navigator;
 
-    public function __construct(string $name, GalaxyAtlas $atlas)
+    public function __construct(PlayerProfile $profile, GalaxyAtlas $atlas)
     {
-        $this->name = $name;
+        $this->profile = $profile;
         $this->navigator = new HyperdriveNavigator($atlas);
         $this->targetPlanet = $this->navigator->getRandomPlanet();
         $this->currentPlanet = $this->navigator->getRandomPlanet();
     }
 
+    #[Pure]
     public function getName(): string
     {
-        return $this->name;
+        return $this->profile->getName();
     }
 
     public function getTargetPlanet(): Planet
