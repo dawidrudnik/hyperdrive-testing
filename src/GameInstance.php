@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Hyperdrive;
 
 use Hyperdrive\GalaxyAtlas\GalaxyAtlas;
-use Hyperdrive\Geography\Planet;
+use Hyperdrive\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Player;
-use Hyperdrive\Player\PlayerProfile;
+use Illuminate\Support\Collection;
 use League\CLImate\CLImate;
 
 class GameInstance
@@ -15,16 +15,23 @@ class GameInstance
     protected CLImate $cli;
     protected Player $player;
     protected GalaxyAtlas $atlas;
+    protected Collection $pilots;
 
-    public function __construct(GalaxyAtlas $atlas, PlayerProfile $playerProfile)
+    public function __construct(GalaxyAtlas $atlas, Collection $pilots)
     {
         $this->atlas = $atlas;
+        $this->pilots = $pilots;
         $this->cli = new CLImate();
-        $this->player = new Player($playerProfile, $atlas);
     }
 
     public function start(): void
     {
+        $this->cli->info("Select Your Pilot");
+        $options = $this->pilots->toArray();
+        $result =$this->cli->radio("Select Pilot", $options)->prompt();
+
+        $this->player = new Player($result, new HyperdriveNavigator($this->atlas));
+
         $this->cli->info("Your target is the {$this->player->getTargetPlanet()}.");
 
         while (true) {
@@ -38,14 +45,14 @@ class GameInstance
             $options = $this->player->getCurrentPlanet()->getNeighbours()->toArray() + [
                 "more" => "[show more option]",
             ];
-            $result = $this->selectOption("Select jump target planet", $options);
+            $result = $this->cli->radio("Select jump target planet", $options)->prompt();
 
             if ($result === "more") {
                 $options = [
                     "return" => "return",
                     "quit" => "quit application",
                 ];
-                $result = $this->selectOption("Select option", $options);
+                $result = $this->cli->radio("Select option", $options)->prompt();
 
                 if ($result === "quit") {
                     break;
@@ -55,10 +62,5 @@ class GameInstance
 
             $this->player->jumpToPlanet($result);
         }
-    }
-
-    private function selectOption(string $message, array $options): string|Planet
-    {
-        return $this->cli->radio($message, $options)->prompt();
     }
 }

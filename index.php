@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 use Hyperdrive\GalaxyAtlas\GalaxyAtlasBuilder;
 use Hyperdrive\GameInstance;
-use Hyperdrive\Player\PlayerProfile;
+use Hyperdrive\Player\Pilot\PilotsBuilder;
 
 require "./vendor/autoload.php";
 
-$player = new PlayerProfile("Dawid");
 $atlas = GalaxyAtlasBuilder::buildFromYaml("./resources/routes.yaml");
+$pilots = PilotsBuilder::buildFromYaml("./resources/pilots.yaml");
 
-(new GameInstance($atlas, $player))->start();
+(new GameInstance($atlas, $pilots))->start();
