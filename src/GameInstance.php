@@ -9,6 +9,7 @@ use Hyperdrive\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Player;
 use Illuminate\Support\Collection;
 use League\CLImate\CLImate;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class GameInstance
 {
@@ -16,11 +17,13 @@ class GameInstance
     protected Player $player;
     protected GalaxyAtlas $atlas;
     protected Collection $pilots;
+    protected Collection $spaceships;
 
-    public function __construct(GalaxyAtlas $atlas, Collection $pilots)
+    public function __construct(GalaxyAtlas $atlas, Collection $pilots, Collection $spaceships)
     {
         $this->atlas = $atlas;
         $this->pilots = $pilots;
+        $this->spaceships = $spaceships;
         $this->cli = new CLImate();
     }
 
@@ -28,9 +31,13 @@ class GameInstance
     {
         $this->cli->info("Select Your Pilot");
         $options = $this->pilots->toArray();
-        $result =$this->cli->radio("Select Pilot", $options)->prompt();
+        $pilot = $this->cli->radio("Select Pilot", $options)->prompt();
 
-        $this->player = new Player($result, new HyperdriveNavigator($this->atlas));
+        $this->cli->info("Select Your Spaceship");
+        $options = $this->spaceships->toArray();
+        $spaceship = $this->cli->radio("Select Spaceship", $options)->prompt();
+
+        $this->player = new Player($pilot, $spaceship, new HyperdriveNavigator($this->atlas));
 
         $this->cli->info("Your target is the {$this->player->getTargetPlanet()}.");
 
@@ -59,8 +66,11 @@ class GameInstance
                 }
                 continue;
             }
-
-            $this->player->jumpToPlanet($result);
+            try {
+                $this->player->jumpToPlanet($result);
+            } catch (Exception $exception) {
+                $this->cli->error($exception->getMessage());
+            }
         }
     }
 }

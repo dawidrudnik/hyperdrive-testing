@@ -7,19 +7,22 @@ namespace Hyperdrive\Player;
 use Hyperdrive\Geography\Planet;
 use Hyperdrive\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Pilot\Pilot;
+use Hyperdrive\Player\Spaceship\Spaceship;
 use JetBrains\PhpStorm\Pure;
 
 class Player
 {
     protected Pilot $pilot;
+    protected Spaceship $spaceship;
     protected Planet $targetPlanet;
     protected Planet $currentPlanet;
     protected HyperdriveNavigator $navigator;
 
-    public function __construct(Pilot $pilot, HyperdriveNavigator $navigator)
+    public function __construct(Pilot $pilot, Spaceship $spaceship, HyperdriveNavigator $navigator)
     {
         $this->pilot = $pilot;
         $this->navigator = $navigator;
+        $this->spaceship = $spaceship;
         $this->targetPlanet = $this->navigator->getRandomPlanet();
         $this->currentPlanet = $this->navigator->getRandomPlanet();
     }
@@ -47,6 +50,7 @@ class Player
 
     public function jumpToPlanet(Planet $planet): void
     {
+        $this->spaceship->fuelConsumption();
         $this->navigator->jumpTo($planet);
         $this->currentPlanet = $this->navigator->getCurrentPlanet();
     }
