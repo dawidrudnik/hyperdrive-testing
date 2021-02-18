@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Hyperdrive\Player;
 
 use Hyperdrive\Geography\Planet;
-use Hyperdrive\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Capital\Capital;
+use Hyperdrive\Player\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Pilot\Pilot;
 use Hyperdrive\Player\Spaceship\Spaceship;
 use JetBrains\PhpStorm\ArrayShape;
@@ -25,7 +25,7 @@ class Player
         $this->pilot = $pilot;
         $this->navigator = $navigator;
         $this->spaceship = $spaceship;
-        $this->capital = new Capital(2000);
+        $this->capital = new Capital(20000);
         $this->targetPlanet = $this->navigator->getRandomPlanet();
         $this->currentPlanet = $this->navigator->getRandomPlanet();
     }
