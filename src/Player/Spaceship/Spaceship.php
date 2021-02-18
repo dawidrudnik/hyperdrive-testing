@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Player\Spaceship;
 
+use Hyperdrive\Player\Capital\Capital;
 use JetBrains\PhpStorm\ArrayShape;
 
 class Spaceship
 {
-    protected string $name;
     protected Tank $tank;
+    protected string $name;
+    protected int $fuelPrice = 50;
 
     public function __construct(array $spaceshipData)
     {
@@ -24,6 +26,14 @@ class Spaceship
     public function fuelConsumption(): void
     {
         $this->tank->fuelConsumption();
+    }
+
+    public function fullRefueling(Capital $capital): void
+    {
+        while (!$this->tank->isItFull()) {
+            $capital->spendingMoney($this->fuelPrice);
+            $this->tank->refueling();
+        }
     }
 
     #[ArrayShape([

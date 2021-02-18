@@ -12,10 +12,27 @@ class Tank
     protected int $fuel;
     protected int $capacity;
     protected int $fuelConsumption;
+    protected int $fillingRate = 100;
 
     public function __construct(array $tankData)
     {
         $this->setTankData($tankData);
+    }
+
+    public function isItFull(): bool
+    {
+        return $this->capacity === $this->fuel;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function refueling(): void
+    {
+        if ($this->fuel === $this->capacity) {
+            throw new Exception("You have a full tank");
+        }
+        $this->fuel += $this->fillingRate;
     }
 
     /**

@@ -65,6 +65,9 @@ class GameInstance
 
             if ($result === "more") {
                 $options = [
+                    "spaceship" => "show spaceship details",
+                    "player" => "show player details",
+                    "refueling" => "refueling Spaceship",
                     "return" => "return",
                     "quit" => "quit application",
                 ];
@@ -72,6 +75,16 @@ class GameInstance
 
                 if ($result === "quit") {
                     break;
+                } elseif ($result === "spaceship") {
+                    $this->cli->table([$this->player->showSpaceshipData()]);
+                } elseif ($result === "refueling") {
+                    try {
+                        $this->player->refuelingSpaceship();
+                    } catch (Exception $exception) {
+                        $this->cli->error($exception->getMessage());
+                    }
+                } elseif ($result === "player") {
+                    $this->cli->table([$this->player->showPlayerData()]);
                 }
                 continue;
             }
