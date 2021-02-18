@@ -7,6 +7,7 @@ namespace Hyperdrive;
 use Hyperdrive\GalaxyAtlas\GalaxyAtlas;
 use Hyperdrive\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Player;
+use Hyperdrive\Player\Spaceship\SpaceshipsCollection;
 use Illuminate\Support\Collection;
 use League\CLImate\CLImate;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -17,9 +18,9 @@ class GameInstance
     protected Player $player;
     protected GalaxyAtlas $atlas;
     protected Collection $pilots;
-    protected Collection $spaceships;
+    protected SpaceshipsCollection $spaceships;
 
-    public function __construct(GalaxyAtlas $atlas, Collection $pilots, Collection $spaceships)
+    public function __construct(GalaxyAtlas $atlas, Collection $pilots, SpaceshipsCollection $spaceships)
     {
         $this->atlas = $atlas;
         $this->pilots = $pilots;
@@ -29,18 +30,26 @@ class GameInstance
 
     public function start(): void
     {
+        //Select Pilot
         $this->cli->info("Select Your Pilot");
         $options = $this->pilots->toArray();
         $pilot = $this->cli->radio("Select Pilot", $options)->prompt();
+        $this->cli->info("Your Select {$pilot}.");
 
+        //Select Spaceship
+        $this->cli->table($this->spaceships->getSpaceshipsData());
         $this->cli->info("Select Your Spaceship");
         $options = $this->spaceships->toArray();
         $spaceship = $this->cli->radio("Select Spaceship", $options)->prompt();
+        $this->cli->info("Your Select {$spaceship}.");
 
+        //Create Player
         $this->player = new Player($pilot, $spaceship, new HyperdriveNavigator($this->atlas));
 
+        //Show target
         $this->cli->info("Your target is the {$this->player->getTargetPlanet()}.");
 
+        //Game
         while (true) {
             if ($this->player->checkPlanetsEquals()) {
                 $this->cli->info("You reached the {$this->player->getTargetPlanet()}!");

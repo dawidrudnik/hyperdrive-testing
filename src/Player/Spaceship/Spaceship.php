@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Player\Spaceship;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class Spaceship
 {
     protected string $name;
@@ -11,7 +13,7 @@ class Spaceship
 
     public function __construct(array $spaceshipData)
     {
-        $this->setPilotData($spaceshipData);
+        $this->setSpaceshipData($spaceshipData);
     }
 
     public function __toString(): string
@@ -24,7 +26,20 @@ class Spaceship
         $this->tank->fuelConsumption();
     }
 
-    private function setPilotData(array $spaceshipData): void
+    #[ArrayShape([
+        "name" => "string",
+        "fuel" => "int",
+        "capacity" => "int",
+        "fuelConsumption" => "int",
+    ])]
+    public function getSpaceshipData(): array
+    {
+        return [
+            "name" => $this->name,
+        ] + $this->tank->getTankData();
+    }
+
+    private function setSpaceshipData(array $spaceshipData): void
     {
         $this->name = $spaceshipData["name"];
         $this->tank = new Tank($spaceshipData["tank"]);
