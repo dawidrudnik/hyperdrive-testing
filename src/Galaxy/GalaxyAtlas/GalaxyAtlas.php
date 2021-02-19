@@ -31,6 +31,4 @@ class GalaxyAtlas
     {
         return $this->routes->toArray();
     }
-
-
 }
