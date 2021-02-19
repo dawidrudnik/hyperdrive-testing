@@ -17,8 +17,11 @@ class Player
     protected Planet $targetPlanet;
     protected Planet $currentPlanet;
 
-    public function __construct(protected Pilot $pilot, protected Spaceship $spaceship, protected HyperdriveNavigator $navigator)
-    {
+    public function __construct(
+        protected Pilot $pilot,
+        protected Spaceship $spaceship,
+        protected HyperdriveNavigator $navigator
+    ) {
         $this->capital = new Capital(20000);
         $this->targetPlanet = $this->navigator->getRandomPlanet();
         $this->currentPlanet = $this->navigator->getRandomPlanet();

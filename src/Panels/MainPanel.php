@@ -11,8 +11,9 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MainPanel extends BasePanel
 {
-    public function __construct(protected Player $player)
-    {
+    public function __construct(
+        protected Player $player
+    ) {
         parent::__construct();
     }
 

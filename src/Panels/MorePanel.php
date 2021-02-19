@@ -10,8 +10,9 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MorePanel extends BasePanel
 {
-    public function __construct(protected Player $player)
-    {
+    public function __construct(
+        protected Player $player
+    ) {
         parent::__construct();
     }
 

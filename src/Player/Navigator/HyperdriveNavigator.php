@@ -11,8 +11,9 @@ class HyperdriveNavigator
 {
     protected ?Planet $currentPlanet;
 
-    public function __construct(protected GalaxyAtlas $atlas)
-    {
+    public function __construct(
+        protected GalaxyAtlas $atlas
+    ) {
     }
 
     public function getCurrentPlanet(): Planet

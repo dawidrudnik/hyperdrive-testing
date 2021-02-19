@@ -17,8 +17,11 @@ class Game
 {
     protected Player $player;
 
-    public function __construct(protected GalaxyAtlas $atlas, protected Collection $pilots, protected SpaceshipsCollection $spaceships)
-    {
+    public function __construct(
+        protected GalaxyAtlas $atlas,
+        protected Collection $pilots,
+        protected SpaceshipsCollection $spaceships
+    ) {
     }
 
     public function start(): void
