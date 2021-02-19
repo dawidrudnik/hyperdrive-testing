@@ -6,17 +6,14 @@ namespace Hyperdrive\Panels;
 
 use Hyperdrive\Geography\Planet;
 use Hyperdrive\Panels\Options\MainOptions;
-use Hyperdrive\Panels\Options\MoreOptions;
 use Hyperdrive\Player\Player;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MainPanel extends BasePanel
 {
-    protected ?Player $player;
-
-    public function setPLayer(Player $player): void
+    public function __construct(protected Player $player)
     {
-        $this->player = $player;
+        parent::__construct();
     }
 
     public function showTarget(): void
@@ -32,19 +29,14 @@ class MainPanel extends BasePanel
     /**
      * @throws Exception
      */
-    public function checkPlanetsEquals(): void
+    public function ifReachedTarget(): void
     {
-        if ($this->player->checkPlanetsEquals()) {
+        if ($this->player->isPlanetsEqual()) {
             throw new Exception("You reached the {$this->player->getTargetPlanet()}!");
         }
     }
 
-    public function showException(Exception $exception): void
-    {
-        $this->cli->error($exception->getMessage());
-    }
-
-    public function mainSelectSection(): void
+    public function selectionSection(): void
     {
         $options = new MainOptions();
         $result = $this->cli->radio("Select jump target planet", $options($this->player))->prompt();
@@ -56,35 +48,8 @@ class MainPanel extends BasePanel
                 $this->showException($exception);
             }
         } else {
-            $this->moreSelectSection();
-        }
-    }
-
-    private function moreSelectSection(): void
-    {
-        $options = new MoreOptions();
-        $result = $this->cli->radio("Select option", $options())->prompt();
-        $this->checkResult($result);
-    }
-
-    private function checkResult(string $result): void
-    {
-        switch ($result) {
-            case "spaceship":
-                $this->cli->table([$this->player->showSpaceshipData()]);
-                break;
-            case "player":
-                $this->cli->table([$this->player->showPlayerData()]);
-                break;
-            case "refueling":
-                try {
-                    $this->player->refuelingSpaceship();
-                } catch (Exception $exception) {
-                    $this->showException($exception);
-                }
-                break;
-            case "quit":
-                throw new Exception("You left the game :(");
+            $moreSelectionSection = new MorePanel($this->player);
+            $moreSelectionSection->selectionSection();
         }
     }
 }
