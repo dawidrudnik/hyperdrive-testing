@@ -30,6 +30,11 @@ class Route
         return $this->planets->random();
     }
 
+    public function addPlanet(Planet $planet): void
+    {
+        $this->planets->add($planet);
+    }
+
     public function createOrUpdatePlanet(string $name): Planet
     {
         $planet = new Planet($name);
@@ -40,5 +45,14 @@ class Route
     public function getPlanets(): Collection
     {
         return $this->planets;
+    }
+
+    public function getPlanetByName(string $name): Planet
+    {
+        foreach ($this->planets as $planet) {
+            if ($planet->__toString() === $name) {
+                return $planet;
+            }
+        }
     }
 }
