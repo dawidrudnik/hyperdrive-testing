@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Hyperdrive\GalaxyAtlas;
+namespace Hyperdrive\Galaxy\GalaxyAtlas;
 
 use Hyperdrive\Contracts\BuilderContract;
-use Hyperdrive\Geography\Planet;
+use Hyperdrive\Galaxy\Geography\Planet;
+use Hyperdrive\Galaxy\Geography\Route;
 use Symfony\Component\Yaml\Yaml;
 
 class GalaxyAtlasBuilder implements BuilderContract
@@ -25,26 +26,29 @@ class GalaxyAtlasBuilder implements BuilderContract
     public static function buildFromYaml(string $filePath): GalaxyAtlas
     {
         $galaxyAtlas = new GalaxyAtlas();
-        $routes = Yaml::parseFile($filePath);
-        self::buildPlanets($galaxyAtlas, $routes);
+        $routesData = Yaml::parseFile($filePath);
+        self::buildPlanets($galaxyAtlas, $routesData);
 
         return $galaxyAtlas;
     }
 
-    protected static function buildPlanets(GalaxyAtlas &$galaxyAtlas, array $routes): void
+    protected static function buildPlanets(GalaxyAtlas &$galaxyAtlas, array $routesData): void
     {
-        foreach ($routes as $planets) {
+        foreach ($routesData as $routeData) {
+            $route = new Route($routeData["name"]);
+
             /** @var Planet|null $previous */
             $previous = null;
 
-            foreach ($planets as $planet) {
-                $planet = $galaxyAtlas->createOrUpdatePlanet($planet);
+            foreach ($routeData["planets"] as $planet) {
+                $planet = $route->createOrUpdatePlanet($planet);
                 if ($previous !== null) {
                     $previous->addNeighbour($planet);
                     $planet->addNeighbour($previous);
                 }
                 $previous = $planet;
             }
+            $galaxyAtlas->addRoute($route);
         }
     }
 }
