@@ -35,7 +35,7 @@ class Level
     #[ArrayShape([
         "name" => "string",
         "capital" => "int",
-        "fuel" => "int"
+        "fuel" => "int",
     ])]
     public function getLevelData(): array
     {

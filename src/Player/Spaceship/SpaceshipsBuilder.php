@@ -33,7 +33,9 @@ class SpaceshipsBuilder implements BuilderContract
     protected static function buildSpaceship(SpaceshipsCollection &$spaceshipsCollection, array $data): void
     {
         foreach ($data as $name => $spaceshipData) {
-            $spaceshipsCollection->addSpaceship(new Spaceship($spaceshipData + ["name" => $name]));
+            $spaceshipsCollection->addSpaceship(new Spaceship($spaceshipData + [
+                "name" => $name,
+            ]));
         }
     }
 }

@@ -63,7 +63,7 @@ class Player
         "name" => "string",
         "capital" => "int",
         "target planet" => "string",
-        "current planet" => "string"
+        "current planet" => "string",
     ])]
     public function getPlayerData(): array
     {

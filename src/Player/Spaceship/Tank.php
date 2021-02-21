@@ -57,10 +57,12 @@ class Tank
             "fuelConsumption" => $this->fuelConsumption,
         ];
 
-        if ($this->fuel == 0) {
+        if ($this->fuel === 0) {
             return $data;
         }
-        return ["fuel" => $this->fuel] + $data;
+        return [
+            "fuel" => $this->fuel,
+        ] + $data;
     }
 
     private function setTankData(array $tankData): void

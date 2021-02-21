@@ -29,7 +29,9 @@ class LevelsBuilder implements BuilderContract
     protected static function buildSpaceship(LevelsCollection &$levelsCollection, array $data): void
     {
         foreach ($data as $name => $levelData) {
-            $levelsCollection->addLevel(new Level($levelData + ["name" => $name]));
+            $levelsCollection->addLevel(new Level($levelData + [
+                "name" => $name,
+            ]));
         }
     }
 }

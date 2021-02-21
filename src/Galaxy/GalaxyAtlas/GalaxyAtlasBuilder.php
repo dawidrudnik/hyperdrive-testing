@@ -56,7 +56,7 @@ class GalaxyAtlasBuilder implements BuilderContract
         foreach ($data as $name => $planets) {
             $route = self::buildRouteFromArray([
                 "name" => $name,
-                "planets" => $planets
+                "planets" => $planets,
             ]);
             $galaxyAtlas->addRoute($route);
         }

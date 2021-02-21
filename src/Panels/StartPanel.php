@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Panels;
 
-use Hyperdrive\Level\Level;
-use Hyperdrive\Level\LevelsBuilder;
-use Hyperdrive\Level\LevelsCollection;
 use Hyperdrive\Galaxy\GalaxyAtlas\GalaxyAtlas;
 use Hyperdrive\Galaxy\GalaxyAtlas\GalaxyAtlasBuilder;
 use Hyperdrive\Galaxy\Geography\Route;
+use Hyperdrive\Level\Level;
+use Hyperdrive\Level\LevelsBuilder;
+use Hyperdrive\Level\LevelsCollection;
 use Hyperdrive\Player\Pilot\Pilot;
 use Hyperdrive\Player\Pilot\PilotsBuilder;
 use Hyperdrive\Player\Spaceship\Spaceship;
@@ -30,7 +30,7 @@ class StartPanel extends BasePanel
         $this->levels = LevelsBuilder::buildFromYaml("./resources/levels.yaml");
         $this->spaceships = SpaceshipsBuilder::buildFromYaml("./resources/spaceships.yaml");
         $this->atlas = GalaxyAtlasBuilder::buildFromYaml("./resources/routes.yaml");
-        $this->pilots = PilotsBuilder::buildFromYaml("./resources/pilots.yaml");;
+        $this->pilots = PilotsBuilder::buildFromYaml("./resources/pilots.yaml");
     }
 
     public function selectDifficultyLevel(): Level
