@@ -13,17 +13,16 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Player
 {
-    protected Capital $capital;
     protected Planet $targetPlanet;
     protected ?Planet $currentPlanet;
 
     public function __construct(
+        protected Capital $capital,
         protected Pilot $pilot,
         protected Spaceship $spaceship,
         protected HyperdriveNavigator $hyperdriveNavigator
     )
     {
-        $this->capital = new Capital(20000);
         $this->targetPlanet = $this->hyperdriveNavigator->getRandomPlanet();
         $this->currentPlanet = $this->hyperdriveNavigator->getRandomPlanet();
     }
@@ -55,12 +54,6 @@ class Player
         $this->currentPlanet = $this->hyperdriveNavigator->getCurrentPlanet();
     }
 
-    #[ArrayShape([
-        "name" => "string",
-        "fuel" => "int",
-        "capacity" => "int",
-        "fuelConsumption" => "int",
-    ])]
     public function getSpaceshipData(): array
     {
         return $this->spaceship->getSpaceshipData();
