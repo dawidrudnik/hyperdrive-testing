@@ -52,15 +52,15 @@ class Tank
 
     public function getTankData(): array
     {
-        $array = [
+        $data = [
             "capacity" => $this->capacity,
             "fuelConsumption" => $this->fuelConsumption,
         ];
 
         if ($this->fuel == 0) {
-            return $array;
+            return $data;
         }
-        return ["fuel" => $this->fuel] + $array;
+        return ["fuel" => $this->fuel] + $data;
     }
 
     private function setTankData(array $tankData): void

@@ -62,12 +62,16 @@ class Player
     #[ArrayShape([
         "name" => "string",
         "capital" => "int",
+        "target planet" => "string",
+        "current planet" => "string"
     ])]
     public function getPlayerData(): array
     {
         return [
-            "name" => $this->pilot,
+            "name" => $this->pilot->__toString(),
             "capital" => $this->capital->getCapital(),
+            "target planet" => $this->targetPlanet->__toString(),
+            "current planet" => $this->currentPlanet->__toString(),
         ];
     }
 

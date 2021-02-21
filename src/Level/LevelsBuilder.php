@@ -20,16 +20,16 @@ class LevelsBuilder implements BuilderContract
     public static function buildFromYaml(string $filePath): LevelsCollection
     {
         $levelsCollection = new LevelsCollection();
-        $levelsData = Yaml::parseFile($filePath);
-        self::buildSpaceship($levelsCollection, $levelsData);
+        $data = Yaml::parseFile($filePath);
+        self::buildSpaceship($levelsCollection, $data);
 
         return $levelsCollection;
     }
 
-    protected static function buildSpaceship(LevelsCollection &$levelsCollection, array $levelsData): void
+    protected static function buildSpaceship(LevelsCollection &$levelsCollection, array $data): void
     {
-        foreach ($levelsData as $key => $difficultyLevelData) {
-            $levelsCollection->addLevel(new Level($difficultyLevelData + ["name" => $key]));
+        foreach ($data as $name => $levelData) {
+            $levelsCollection->addLevel(new Level($levelData + ["name" => $name]));
         }
     }
 }
