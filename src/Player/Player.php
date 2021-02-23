@@ -7,14 +7,15 @@ namespace Hyperdrive\Player;
 use Hyperdrive\Galaxy\Geography\Planet;
 use Hyperdrive\Player\Capital\Capital;
 use Hyperdrive\Player\Navigator\HyperdriveNavigator;
+use Hyperdrive\Player\Navigator\HyperspaceJump;
 use Hyperdrive\Player\Pilot\Pilot;
 use Hyperdrive\Player\Spaceship\Spaceship;
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
 
 class Player
 {
     protected Planet $targetPlanet;
-    protected ?Planet $currentPlanet;
 
     public function __construct(
         protected Capital $capital,
@@ -24,7 +25,7 @@ class Player
     )
     {
         $this->targetPlanet = $this->hyperdriveNavigator->getRandomPlanet();
-        $this->currentPlanet = $this->hyperdriveNavigator->getRandomPlanet();
+        $this->hyperdriveNavigator->getRandomPlanet();
     }
 
     public function getTargetPlanet(): Planet
@@ -32,14 +33,16 @@ class Player
         return $this->targetPlanet;
     }
 
+    #[Pure]
     public function getCurrentPlanet(): ?Planet
     {
-        return $this->currentPlanet;
+        return $this->hyperdriveNavigator->getCurrentPlanet();
     }
 
+    #[Pure]
     public function isPlanetsEqual(): bool
     {
-        return $this->currentPlanet === $this->targetPlanet;
+        return $this->getCurrentPlanet() === $this->targetPlanet;
     }
 
     public function refuelingSpaceship(): void
@@ -51,7 +54,6 @@ class Player
     {
         $this->spaceship->fuelConsumption();
         $this->hyperdriveNavigator->jumpTo($planet);
-        $this->currentPlanet = $this->hyperdriveNavigator->getCurrentPlanet();
     }
 
     public function getSpaceshipData(): array
@@ -71,12 +73,18 @@ class Player
             "name" => $this->pilot->__toString(),
             "capital" => $this->capital->getCapital(),
             "target planet" => $this->targetPlanet->__toString(),
-            "current planet" => $this->currentPlanet->__toString(),
+            "current planet" => $this->getCurrentPlanet()->__toString(),
         ];
     }
 
     public function getMap(): array
     {
         return $this->hyperdriveNavigator->getMap();
+    }
+
+    #[Pure]
+    public function hyperspaceJump(): HyperspaceJump
+    {
+        return new HyperspaceJump($this->hyperdriveNavigator, $this->capital);
     }
 }

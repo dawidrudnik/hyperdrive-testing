@@ -35,4 +35,9 @@ class HyperdriveNavigator
     {
         return $this->route->getPlanets()->toArray();
     }
+
+    public function getRoute(): Route
+    {
+        return $this->route;
+    }
 }
