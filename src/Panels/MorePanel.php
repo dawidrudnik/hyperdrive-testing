@@ -44,8 +44,8 @@ class MorePanel extends BasePanel implements PanelContract
                 break;
             case "jump":
                 try {
-                    $jump = new HyperspaceJumpPanel($this->player->hyperspaceJump());
-                    $jump->selectionSection();
+                    $hyperspaceJumpPanel = new HyperspaceJumpPanel($this->player->hyperspaceJump());
+                    $hyperspaceJumpPanel->selectionSection();
                 } catch (Exception $exception) {
                     $this->showException($exception);
                 }

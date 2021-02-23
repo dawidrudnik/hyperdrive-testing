@@ -19,8 +19,8 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
 
     public function selectionSection(): void
     {
-        $options = new HyperspaceJumpOptions;
-        $result = $this->cli->radio("Select option", $options())->prompt();
+        $hyperspaceJumpOptions = new HyperspaceJumpOptions();
+        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions())->prompt();
 
         try {
             $this->checkResult($result);
@@ -47,13 +47,13 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
 
     private function selectPlanet(): Planet
     {
-        $options = $this->hyperspaceJump->getOptions();
+        $collection = $this->hyperspaceJump->getOptions();
 
-        if ($options->count() != 1) {
-            return $this->cli->radio("Select planet to hyperspace jump", $options->toArray())->prompt();
+        if ($collection->count() !== 1) {
+            return $this->cli->radio("Select planet to hyperspace jump", $collection->toArray())->prompt();
         }
 
-        $planet = $options->get(0);
+        $planet = $collection->get(0);
         $this->cli->error("Only one planet meets the requirements for a hyperspace jump");
         $result = $this->cli->radio("Do you want to jump to {$planet}", ["Yes", "No"])->prompt();
 

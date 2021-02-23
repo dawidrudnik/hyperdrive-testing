@@ -67,7 +67,7 @@ class Player
         "Capital" => "int",
         "Target Planet" => "string",
         "Current Planet" => "string",
-        "Hyperspace Jumps Limit" => "int|null"
+        "Hyperspace Jumps Limit" => "int|null",
     ])]
     public function getPlayerData(): array
     {

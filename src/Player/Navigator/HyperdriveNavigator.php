@@ -22,7 +22,7 @@ class HyperdriveNavigator
 
     public function hyperspaceJumpTo(Planet $planet): void
     {
-        $this->hyperspaceJumpsLimit -= 1;
+        --$this->hyperspaceJumpsLimit;
         $this->jumpTo($planet);
     }
 

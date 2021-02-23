@@ -10,7 +10,7 @@ use Hyperdrive\Panels\Options\MainOptions;
 use Hyperdrive\Player\Player;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
-class MainPanel extends BasePanel  implements PanelContract
+class MainPanel extends BasePanel implements PanelContract
 {
     public function __construct(protected Player $player)
     {

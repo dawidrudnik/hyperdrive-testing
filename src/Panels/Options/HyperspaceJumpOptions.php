@@ -11,7 +11,7 @@ class HyperspaceJumpOptions
     #[ArrayShape([
         "short" => "string",
         "long" => "string",
-        "quit" => "string"
+        "quit" => "string",
     ])]
     public function __invoke(): array
     {

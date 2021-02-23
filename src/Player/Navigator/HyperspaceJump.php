@@ -32,17 +32,17 @@ class HyperspaceJump
 
     public function getOptions(): Collection
     {
-        $options = collect();
+        $collection = collect();
 
-        $options->add($this->getDistantPlanet(
+        $collection->add($this->getDistantPlanet(
             $this->hyperdriveNavigator->getCurrentPlanet()->getId() - $this->distance
         ));
-        $options->add($this->getDistantPlanet(
+        $collection->add($this->getDistantPlanet(
             $this->hyperdriveNavigator->getCurrentPlanet()->getId() + $this->distance
         ));
 
-        return $options->filter(function ($value) {
-            return !is_null($value);
+        return $collection->filter(function ($value): bool {
+            return $value !== null;
         });
     }
 
