@@ -25,7 +25,7 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
         try {
             $this->checkResult($result);
             $planet = $this->selectPlanet();
-            $this->hyperspaceJump->hyperspaceJump($planet);
+            $this->hyperspaceJump->jumpTo($planet);
         } catch (Exception $exception) {
             $this->showException($exception);
         }
@@ -35,10 +35,10 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
     {
         switch ($result) {
             case "short":
-                $this->hyperspaceJump->setDistance(10);
+                $this->hyperspaceJump->setDistance(5);
                 break;
             case "long":
-                $this->hyperspaceJump->setDistance(20);
+                $this->hyperspaceJump->setDistance(10);
                 break;
             case "quit":
                 throw new Exception("Hyperspace jump was canceled");
@@ -55,9 +55,9 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
 
         $planet = $options->get(0);
         $this->cli->error("Only one planet meets the requirements for a hyperspace jump");
-        $result = $this->cli->radio("Do you want to jump to {$planet}", ["yes", "no"])->prompt();
+        $result = $this->cli->radio("Do you want to jump to {$planet}", ["Yes", "No"])->prompt();
 
-        if ($result === "no") {
+        if ($result === "No") {
             throw new Exception("Hyperspace jump was canceled");
         }
 

@@ -12,6 +12,7 @@ use Hyperdrive\Player\Pilot\Pilot;
 use Hyperdrive\Player\Spaceship\Spaceship;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class Player
 {
@@ -21,7 +22,7 @@ class Player
         protected Capital $capital,
         protected Pilot $pilot,
         protected Spaceship $spaceship,
-        protected HyperdriveNavigator $hyperdriveNavigator
+        protected HyperdriveNavigator $hyperdriveNavigator,
     )
     {
         $this->targetPlanet = $this->hyperdriveNavigator->getRandomPlanet();
@@ -62,18 +63,20 @@ class Player
     }
 
     #[ArrayShape([
-        "name" => "string",
-        "capital" => "int",
-        "target planet" => "string",
-        "current planet" => "string",
+        "Name" => "string",
+        "Capital" => "int",
+        "Target Planet" => "string",
+        "Current Planet" => "string",
+        "Hyperspace Jumps Limit" => "int|null"
     ])]
     public function getPlayerData(): array
     {
         return [
-            "name" => $this->pilot->__toString(),
-            "capital" => $this->capital->getCapital(),
-            "target planet" => $this->targetPlanet->__toString(),
-            "current planet" => $this->getCurrentPlanet()->__toString(),
+            "Name" => $this->pilot->__toString(),
+            "Capital" => $this->capital->getCapital(),
+            "Target Planet" => $this->targetPlanet->__toString(),
+            "Current Planet" => $this->getCurrentPlanet()->__toString(),
+            "Hyperspace Jumps Limit" => $this->hyperdriveNavigator->getHyperspaceJumpsLimit(),
         ];
     }
 
@@ -82,9 +85,11 @@ class Player
         return $this->hyperdriveNavigator->getMap();
     }
 
-    #[Pure]
     public function hyperspaceJump(): HyperspaceJump
     {
+        if ($this->hyperdriveNavigator->getHyperspaceJumpsLimit() <= 0) {
+            throw new Exception("Hyperspace jump limit exhausted");
+        }
         return new HyperspaceJump($this->hyperdriveNavigator, $this->capital);
     }
 }

@@ -24,10 +24,10 @@ class HyperspaceJump
         $this->distance = $distance;
     }
 
-    public function hyperspaceJump(Planet $planet): void
+    public function jumpTo(Planet $planet): void
     {
         $this->capital->spendingMoney($this->price * $this->distance);
-        $this->hyperdriveNavigator->jumpTo($planet);
+        $this->hyperdriveNavigator->hyperspaceJumpTo($planet);
     }
 
     public function getOptions(): Collection

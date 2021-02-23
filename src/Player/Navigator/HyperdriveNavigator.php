@@ -11,8 +11,19 @@ class HyperdriveNavigator
 {
     protected ?Planet $currentPlanet;
 
-    public function __construct(protected Route $route)
+    public function __construct(protected Route $route, protected ?int $hyperspaceJumpsLimit)
     {
+    }
+
+    public function getHyperspaceJumpsLimit(): ?int
+    {
+        return $this->hyperspaceJumpsLimit;
+    }
+
+    public function hyperspaceJumpTo(Planet $planet): void
+    {
+        $this->hyperspaceJumpsLimit -= 1;
+        $this->jumpTo($planet);
     }
 
     public function getCurrentPlanet(): ?Planet

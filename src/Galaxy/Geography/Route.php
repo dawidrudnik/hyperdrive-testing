@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Hyperdrive\Galaxy\Geography;
 
 use Illuminate\Support\Collection;
-use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 /**
@@ -50,7 +49,9 @@ class Route
         return $this->planets;
     }
 
-    #[Pure]
+    /**
+     * @throws Exception
+     */
     public function getPlanetByName(string $name): Planet
     {
         /** @var Planet $planet */
@@ -59,6 +60,7 @@ class Route
                 return $planet;
             }
         }
+        throw new Exception("There is no planet with this name");
     }
 
     /**

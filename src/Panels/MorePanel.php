@@ -43,8 +43,12 @@ class MorePanel extends BasePanel implements PanelContract
                 $this->cli->columns($this->player->getMap(), 6);
                 break;
             case "jump":
-                $jump = new HyperspaceJumpPanel($this->player->hyperspaceJump());
-                $jump->selectionSection();
+                try {
+                    $jump = new HyperspaceJumpPanel($this->player->hyperspaceJump());
+                    $jump->selectionSection();
+                } catch (Exception $exception) {
+                    $this->showException($exception);
+                }
                 break;
             case "quit":
                 throw new Exception("You left the game :(");

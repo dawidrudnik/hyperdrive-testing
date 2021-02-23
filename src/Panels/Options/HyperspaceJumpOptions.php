@@ -16,8 +16,8 @@ class HyperspaceJumpOptions
     public function __invoke(): array
     {
         return [
-            "short" => "Short jump - 10 planets",
-            "long" => "Long jump - 20 planets",
+            "short" => "Short jump - 5 planets",
+            "long" => "Long jump - 10 planets",
             "quit" => "Quit",
         ];
     }
