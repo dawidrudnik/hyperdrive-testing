@@ -33,16 +33,10 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
 
     private function checkResult(string $result): void
     {
-        switch ($result) {
-            case "short":
-                $this->hyperspaceJump->setDistance(5);
-                break;
-            case "long":
-                $this->hyperspaceJump->setDistance(10);
-                break;
-            case "quit":
-                throw new Exception("Hyperspace jump was canceled");
+        if ($result === "quit") {
+            throw new Exception("Hyperspace jump was canceled");
         }
+        $this->hyperspaceJump->setDistance($result);
     }
 
     private function selectPlanet(): Planet
