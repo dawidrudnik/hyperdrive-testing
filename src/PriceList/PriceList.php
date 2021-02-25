@@ -27,4 +27,9 @@ class PriceList
         $data = Yaml::parseFile(self::FilePath);
         return $data["Map"]["price"];
     }
+
+    public static function getData(): array
+    {
+        return Yaml::parseFile(self::FilePath);
+    }
 }

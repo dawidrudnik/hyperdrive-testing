@@ -29,6 +29,10 @@ class MorePanel extends BasePanel implements PanelContract
     private function checkResult(string $result): void
     {
         switch ($result) {
+            case "price-list":
+                $priceListPanel = new PriceListPanel();
+                $priceListPanel->show();
+                break;
             case "spaceship":
                 $this->cli->table([$this->player->getSpaceshipData()]);
                 break;
