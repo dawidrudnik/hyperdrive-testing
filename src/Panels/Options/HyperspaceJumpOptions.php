@@ -13,11 +13,11 @@ class HyperspaceJumpOptions
         "long" => "string",
         "quit" => "string",
     ])]
-    public function __invoke(): array
+    public function __invoke(int $shortDistance, int $longDistance): array
     {
         return [
-            "short" => "Short jump - 5 planets",
-            "long" => "Long jump - 10 planets",
+            "short" => "Short jump - {$shortDistance} planets",
+            "long" => "Long jump - {$longDistance} planets",
             "quit" => "Quit",
         ];
     }

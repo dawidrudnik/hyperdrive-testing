@@ -40,7 +40,12 @@ class MorePanel extends BasePanel implements PanelContract
                 }
                 break;
             case "map":
-                $this->cli->columns($this->player->getMap(), 6);
+                try {
+                    $mapPanel = new MapPanel($this->player);
+                    $mapPanel->showMap();
+                } catch (Exception $exception) {
+                    $this->showException($exception);
+                }
                 break;
             case "jump":
                 try {

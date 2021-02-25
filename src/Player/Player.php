@@ -10,6 +10,7 @@ use Hyperdrive\Player\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Navigator\HyperspaceJump;
 use Hyperdrive\Player\Pilot\Pilot;
 use Hyperdrive\Player\Spaceship\Spaceship;
+use Hyperdrive\PriceList\PriceList;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -17,6 +18,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 class Player
 {
     protected Planet $targetPlanet;
+    protected int $mapPrice;
 
     public function __construct(
         protected Capital $capital,
@@ -27,6 +29,7 @@ class Player
     {
         $this->targetPlanet = $this->hyperdriveNavigator->getRandomPlanet();
         $this->hyperdriveNavigator->getRandomPlanet();
+        $this->mapPrice = PriceList::getMapPrice();
     }
 
     public function getTargetPlanet(): Planet
@@ -78,6 +81,12 @@ class Player
             "Current Planet" => $this->getCurrentPlanet()->__toString(),
             "Hyperspace Jumps Limit" => $this->hyperdriveNavigator->getHyperspaceJumpsLimit(),
         ];
+    }
+
+    public function buyAccessToTheMap(): void
+    {
+        $this->capital->spendingMoney($this->mapPrice);
+        $this->hyperdriveNavigator->unlockMap();
     }
 
     public function getMap(): array

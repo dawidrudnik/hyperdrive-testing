@@ -1,6 +1,8 @@
 Fuel:
   price: 50
   capacity: 100
+Map:
+  price: 1000
 Hyperspace-jump:
   short:
     distance: 5

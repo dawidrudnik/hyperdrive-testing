@@ -21,4 +21,10 @@ class PriceList
         $data = Yaml::parseFile(self::FilePath);
         return $data["Hyperspace-jump"][$name];
     }
+
+    public static function getMapPrice(): int
+    {
+        $data = Yaml::parseFile(self::FilePath);
+        return $data["Map"]["price"];
+    }
 }

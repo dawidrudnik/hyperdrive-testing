@@ -11,10 +11,12 @@ class Spaceship
 {
     protected Tank $tank;
     protected string $name;
+    protected array $fuelValues;
 
     public function __construct(array $spaceshipData)
     {
         $this->setSpaceshipData($spaceshipData);
+        $this->fuelValues = PriceList::getFuelValues();
     }
 
     public function __toString(): string
@@ -34,18 +36,17 @@ class Spaceship
 
     public function fullRefueling(Capital $capital): void
     {
-        $fuel = PriceList::getFuelValues();
         while (!$this->tank->isItFull()) {
-            $capital->spendingMoney($fuel["price"]);
-            $this->tank->refueling($fuel["capacity"]);
+            $capital->spendingMoney($this->fuelValues["price"]);
+            $this->tank->refueling($this->fuelValues["capacity"]);
         }
     }
 
     public function getSpaceshipData(): array
     {
         return [
-            "name" => $this->name,
-        ] + $this->tank->getTankData();
+                "name" => $this->name,
+            ] + $this->tank->getTankData();
     }
 
     private function setSpaceshipData(array $spaceshipData): void

@@ -8,6 +8,7 @@ use Hyperdrive\Contracts\PanelContract;
 use Hyperdrive\Galaxy\Geography\Planet;
 use Hyperdrive\Panels\Options\HyperspaceJumpOptions;
 use Hyperdrive\Player\Navigator\HyperspaceJump;
+use Hyperdrive\PriceList\PriceList;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class HyperspaceJumpPanel extends BasePanel implements PanelContract
@@ -19,8 +20,11 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
 
     public function selectionSection(): void
     {
+        $shortDistance = PriceList::getHyperspaceJumpValues("short")["distance"];
+        $longDistance = PriceList::getHyperspaceJumpValues("long")["distance"];
+
         $hyperspaceJumpOptions = new HyperspaceJumpOptions();
-        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions())->prompt();
+        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions($shortDistance, $longDistance))->prompt();
 
         try {
             $this->checkResult($result);
