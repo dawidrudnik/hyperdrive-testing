@@ -4,9 +4,9 @@ Fuel:
 Map:
   price: 1000
 Hyperspace-jump:
-  short:
+  Short:
     distance: 5
     price: 1000
-  long:
+  Long:
     distance: 10
     price: 1800

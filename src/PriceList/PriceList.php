@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hyperdrive\PriceList;
 
+use Hyperdrive\Player\Navigator\HyperspaceJumpOption;
 use Symfony\Component\Yaml\Yaml;
 
 class PriceList
@@ -16,20 +17,21 @@ class PriceList
         return $data["Fuel"];
     }
 
-    public static function getHyperspaceJumpValues(string $name): array
+    public static function getHyperspaceJumpOptions(): array
     {
         $data = Yaml::parseFile(self::FilePath);
-        return $data["Hyperspace-jump"][$name];
+        $collection = collect();
+
+        foreach ($data["Hyperspace-jump"] as $name => $values) {
+            $collection->add(new HyperspaceJumpOption($name, $values["distance"], $values["price"]));
+        }
+
+        return $collection->toArray();
     }
 
     public static function getMapPrice(): int
     {
         $data = Yaml::parseFile(self::FilePath);
         return $data["Map"]["price"];
-    }
-
-    public static function getData(): array
-    {
-        return Yaml::parseFile(self::FilePath);
     }
 }

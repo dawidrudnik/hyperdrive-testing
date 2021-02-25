@@ -6,7 +6,6 @@ namespace Hyperdrive\Panels;
 
 use Hyperdrive\Contracts\PanelContract;
 use Hyperdrive\Galaxy\Geography\Planet;
-use Hyperdrive\Panels\Options\HyperspaceJumpOptions;
 use Hyperdrive\Player\Navigator\HyperspaceJump;
 use Hyperdrive\PriceList\PriceList;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -18,32 +17,21 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
         parent::__construct();
     }
 
-    public function selectionSection(): void
-    {
-        $shortDistance = PriceList::getHyperspaceJumpValues("short")["distance"];
-        $longDistance = PriceList::getHyperspaceJumpValues("long")["distance"];
-
-        $hyperspaceJumpOptions = new HyperspaceJumpOptions();
-        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions($shortDistance, $longDistance))->prompt();
-
-        try {
-            $this->checkResult($result);
-            $planet = $this->selectPlanet();
-            $this->hyperspaceJump->jumpTo($planet);
-        } catch (Exception $exception) {
-            $this->showException($exception);
-        }
-    }
-
     /**
      * @throws Exception
      */
-    private function checkResult(string $result): void
+    public function selectionSection(): void
     {
+        $hyperspaceJumpOptions = PriceList::getHyperspaceJumpOptions();
+        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions + ["quit" => "Quit"])->prompt();
+
         if ($result === "quit") {
             throw new Exception("Hyperspace jump was canceled");
         }
-        $this->hyperspaceJump->setDistance($result);
+
+        $this->hyperspaceJump->setJumpOption($result);
+        $planet = $this->selectPlanet();
+        $this->hyperspaceJump->jumpTo($planet);
     }
 
     /**
@@ -51,7 +39,7 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
      */
     private function selectPlanet(): Planet
     {
-        $collection = $this->hyperspaceJump->getOptions();
+        $collection = $this->hyperspaceJump->getMatchingPlanets();
 
         if ($collection->count() !== 1) {
             return $this->cli->radio("Select planet to hyperspace jump", $collection->toArray())->prompt();

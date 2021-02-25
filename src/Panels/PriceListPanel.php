@@ -11,31 +11,39 @@ use Hyperdrive\PriceList\PriceList;
 
 class PriceListPanel extends BasePanel
 {
-    protected array $priceList;
+    protected int $mapPrice;
+    protected array $fuelPrice;
+    protected array $hyperspaceJumpOptions;
 
     public function __construct()
     {
         parent::__construct();
-        $this->priceList = PriceList::getData();
+        $this->fuelPrice = PriceList::getFuelValues();
+        $this->mapPrice = PriceList::getMapPrice();
+        $this->hyperspaceJumpOptions = PriceList::getHyperspaceJumpOptions();
     }
 
     public function show(): void
     {
-        $table = $this->createTable($this->priceList);
+        $table = $this->createTable();
         $this->cli->table($table);
     }
 
-    private function createTable(array $data): array
+    private function createTable(): array
     {
+        $data = collect();
+
         $fuelResource = new FuelResource();
         $mapResource = new MapResource();
         $hyperspaceJumpResource = new HyperspaceJumpResource();
 
-        return [
-            $fuelResource($data["Fuel"]),
-            $mapResource($data["Map"]),
-            $hyperspaceJumpResource($data["Hyperspace-jump"]["short"]),
-            $hyperspaceJumpResource($data["Hyperspace-jump"]["long"]),
-        ];
+        $data->add($fuelResource($this->fuelPrice));
+        $data->add($mapResource($this->mapPrice));
+
+        foreach ($this->hyperspaceJumpOptions as $jumpOption) {
+            $data->add($hyperspaceJumpResource($jumpOption));
+        }
+
+        return $data->toArray();
     }
 }

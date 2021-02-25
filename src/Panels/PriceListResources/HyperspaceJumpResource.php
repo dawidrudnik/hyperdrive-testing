@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Panels\PriceListResources;
 
+use Hyperdrive\Player\Navigator\HyperspaceJumpOption;
 use JetBrains\PhpStorm\ArrayShape;
 
 class HyperspaceJumpResource extends BaseResource
@@ -12,10 +13,10 @@ class HyperspaceJumpResource extends BaseResource
         "Name" => "string",
         "Price" => "int",
     ])]
-    public function __invoke(array $hyperspaceJumpValues): array
+    public function __invoke(HyperspaceJumpOption $jumpOption): array
     {
-        $name = "Hyperspace Jump - {$hyperspaceJumpValues["distance"]} planets";
-        $price = $hyperspaceJumpValues["price"];
+        $name = $jumpOption->__toString();
+        $price = $jumpOption->getPrice();
 
         return $this->toArray($name, $price);
     }

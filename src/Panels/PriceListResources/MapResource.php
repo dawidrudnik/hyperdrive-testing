@@ -12,11 +12,8 @@ class MapResource extends BaseResource
         "Name" => "string",
         "Price" => "int",
     ])]
-    public function __invoke(array $mapValues): array
+    public function __invoke(int $mapPrice): array
     {
-        $name = "Unlocking the map";
-        $price = $mapValues["price"];
-
-        return $this->toArray($name, $price);
+        return $this->toArray("Unlocking the map", $mapPrice);
     }
 }

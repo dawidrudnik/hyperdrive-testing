@@ -6,50 +6,46 @@ namespace Hyperdrive\Player\Navigator;
 
 use Hyperdrive\Galaxy\Geography\Planet;
 use Hyperdrive\Player\Capital\Capital;
-use Hyperdrive\PriceList\PriceList;
 use Illuminate\Support\Collection;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class HyperspaceJump
 {
-    protected int $price;
-    protected int $distance;
-    protected Collection $options;
+    protected Collection $matchingPlanets;
+    protected HyperspaceJumpOption $jumpOption;
 
     public function __construct(protected HyperdriveNavigator $hyperdriveNavigator, protected Capital $capital)
     {
-        $this->options = collect();
+        $this->matchingPlanets = collect();
     }
 
-    public function setDistance(string $name): void
+    public function setJumpOption(HyperspaceJumpOption $jumpOption): void
     {
-        $hyperspaceJump = PriceList::getHyperspaceJumpValues($name);
-        $this->price = $hyperspaceJump["price"];
-        $this->distance = $hyperspaceJump["distance"];
-        $this->capital->isThereEnoughMoney($this->price);
+        $this->jumpOption = $jumpOption;
+        $this->capital->isThereEnoughMoney($this->jumpOption->getPrice());
     }
 
     public function jumpTo(Planet $planet): void
     {
-        $this->capital->spendingMoney($this->price);
+        $this->capital->spendingMoney($this->jumpOption->getPrice());
         $this->hyperdriveNavigator->hyperspaceJumpTo($planet);
     }
 
-    public function getOptions(): Collection
+    public function getMatchingPlanets(): Collection
     {
         $this->getDistantPlanet(
-            $this->hyperdriveNavigator->getCurrentPlanet()->getId() - $this->distance
+            $this->hyperdriveNavigator->getCurrentPlanet()->getId() - $this->jumpOption->getDistance()
         );
         $this->getDistantPlanet(
-            $this->hyperdriveNavigator->getCurrentPlanet()->getId() + $this->distance
+            $this->hyperdriveNavigator->getCurrentPlanet()->getId() + $this->jumpOption->getDistance()
         );
-        return $this->options;
+        return $this->matchingPlanets;
     }
 
     private function getDistantPlanet(int $id): void
     {
         try {
-            $this->options->add($this->hyperdriveNavigator->getRoute()->getPlanetById($id));
+            $this->matchingPlanets->add($this->hyperdriveNavigator->getRoute()->getPlanetById($id));
         } catch (Exception) {
         }
     }
