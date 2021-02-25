@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Level;
 
-
 use JetBrains\PhpStorm\ArrayShape;
 
 class Level
@@ -43,7 +42,7 @@ class Level
         "Difficulty Level" => "string",
         "Fuel" => "int",
         "Capital" => "int",
-        "Hyperspace jumps limit" => "int"
+        "Hyperspace jumps limit" => "int",
     ])]
     public function getLevelData(): array
     {

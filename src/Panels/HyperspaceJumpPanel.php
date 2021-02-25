@@ -35,6 +35,9 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function checkResult(string $result): void
     {
         if ($result === "quit") {
@@ -43,6 +46,9 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
         $this->hyperspaceJump->setDistance($result);
     }
 
+    /**
+     * @throws Exception
+     */
     private function selectPlanet(): Planet
     {
         $collection = $this->hyperspaceJump->getOptions();

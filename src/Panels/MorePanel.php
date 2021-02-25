@@ -23,6 +23,9 @@ class MorePanel extends BasePanel implements PanelContract
         $this->checkResult($result);
     }
 
+    /**
+     * @throws Exception
+     */
     private function checkResult(string $result): void
     {
         switch ($result) {

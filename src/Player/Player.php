@@ -94,6 +94,9 @@ class Player
         return $this->hyperdriveNavigator->getMap();
     }
 
+    /**
+     * @throws Exception
+     */
     public function hyperspaceJump(): HyperspaceJump
     {
         if ($this->hyperdriveNavigator->getHyperspaceJumpsLimit() <= 0) {

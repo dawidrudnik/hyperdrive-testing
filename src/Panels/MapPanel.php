@@ -26,13 +26,16 @@ class MapPanel extends BasePanel implements PanelContract
         }
     }
 
+    /**
+     * @throws Exception
+     */
     public function selectionSection(): void
     {
         $this->cli->info("Do you want to buy access to the map?");
         $result = $this->cli->radio("Select option", ["Yes", "No"])->prompt();
 
         if ($result === "No") {
-            throw new  Exception("The map purchase has been canceled");
+            throw new Exception("The map purchase has been canceled");
         }
 
         $this->player->buyAccessToTheMap();

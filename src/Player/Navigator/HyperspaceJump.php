@@ -14,9 +14,11 @@ class HyperspaceJump
 {
     protected int $price;
     protected int $distance;
+    protected Collection $options;
 
     public function __construct(protected HyperdriveNavigator $hyperdriveNavigator, protected Capital $capital)
     {
+        $this->options = collect();
     }
 
     public function setDistance(string $name): void
@@ -35,26 +37,20 @@ class HyperspaceJump
 
     public function getOptions(): Collection
     {
-        $collection = collect();
-
-        $collection->add($this->getDistantPlanet(
+        $this->getDistantPlanet(
             $this->hyperdriveNavigator->getCurrentPlanet()->getId() - $this->distance
-        ));
-        $collection->add($this->getDistantPlanet(
+        );
+        $this->getDistantPlanet(
             $this->hyperdriveNavigator->getCurrentPlanet()->getId() + $this->distance
-        ));
-
-        return $collection->filter(function ($value): bool {
-            return !is_null($value);
-        });
+        );
+        return $this->options;
     }
 
-    private function getDistantPlanet(int $id): ?Planet
+    private function getDistantPlanet(int $id): void
     {
         try {
-            return $this->hyperdriveNavigator->getRoute()->getPlanetById($id);
+            $this->options->add($this->hyperdriveNavigator->getRoute()->getPlanetById($id));
         } catch (Exception) {
-            return null;
         }
     }
 }
