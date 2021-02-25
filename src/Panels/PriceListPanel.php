@@ -31,19 +31,19 @@ class PriceListPanel extends BasePanel
 
     private function createTable(): array
     {
-        $data = collect();
+        $collection = collect();
 
         $fuelResource = new FuelResource();
         $mapResource = new MapResource();
         $hyperspaceJumpResource = new HyperspaceJumpResource();
 
-        $data->add($fuelResource($this->fuelPrice));
-        $data->add($mapResource($this->mapPrice));
+        $collection->add($fuelResource($this->fuelPrice));
+        $collection->add($mapResource($this->mapPrice));
 
         foreach ($this->hyperspaceJumpOptions as $jumpOption) {
-            $data->add($hyperspaceJumpResource($jumpOption));
+            $collection->add($hyperspaceJumpResource($jumpOption));
         }
 
-        return $data->toArray();
+        return $collection->toArray();
     }
 }

@@ -49,7 +49,7 @@ class Level
         "Fuel" => "int",
         "Capital" => "int",
         "Hyperspace jumps limit" => "int",
-        "Unlocked Map" => "string"
+        "Unlocked Map" => "string",
     ])]
     public function getLevelData(): array
     {

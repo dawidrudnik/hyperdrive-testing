@@ -13,10 +13,10 @@ class HyperspaceJumpResource extends BaseResource
         "Name" => "string",
         "Price" => "int",
     ])]
-    public function __invoke(HyperspaceJumpOption $jumpOption): array
+    public function __invoke(HyperspaceJumpOption $hyperspaceJumpOption): array
     {
-        $name = $jumpOption->__toString();
-        $price = $jumpOption->getPrice();
+        $name = $hyperspaceJumpOption->__toString();
+        $price = $hyperspaceJumpOption->getPrice();
 
         return $this->toArray($name, $price);
     }

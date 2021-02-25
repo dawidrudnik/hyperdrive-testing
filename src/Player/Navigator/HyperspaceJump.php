@@ -19,9 +19,9 @@ class HyperspaceJump
         $this->matchingPlanets = collect();
     }
 
-    public function setJumpOption(HyperspaceJumpOption $jumpOption): void
+    public function setJumpOption(HyperspaceJumpOption $hyperspaceJumpOption): void
     {
-        $this->jumpOption = $jumpOption;
+        $this->jumpOption = $hyperspaceJumpOption;
         $this->capital->isThereEnoughMoney($this->jumpOption->getPrice());
     }
 

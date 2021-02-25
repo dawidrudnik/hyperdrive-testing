@@ -23,7 +23,9 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
     public function selectionSection(): void
     {
         $hyperspaceJumpOptions = PriceList::getHyperspaceJumpOptions();
-        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions + ["quit" => "Quit"])->prompt();
+        $result = $this->cli->radio("Select option", $hyperspaceJumpOptions + [
+            "quit" => "Quit",
+        ])->prompt();
 
         if ($result === "quit") {
             throw new Exception("Hyperspace jump was canceled");
