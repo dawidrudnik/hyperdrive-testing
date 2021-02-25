@@ -12,6 +12,7 @@ class Level
     protected int $fuel;
     protected int $capital;
     protected int $hyperspaceJumpsLimit = 10;
+    protected bool $unlockedMap = false;
 
     public function __construct(array $levelData)
     {
@@ -38,11 +39,17 @@ class Level
         return $this->hyperspaceJumpsLimit;
     }
 
+    public function isUnlockedMap(): bool
+    {
+        return $this->unlockedMap;
+    }
+
     #[ArrayShape([
         "Difficulty Level" => "string",
         "Fuel" => "int",
         "Capital" => "int",
         "Hyperspace jumps limit" => "int",
+        "Unlocked Map" => "string"
     ])]
     public function getLevelData(): array
     {
@@ -51,6 +58,7 @@ class Level
             "Fuel" => $this->fuel,
             "Capital" => $this->capital,
             "Hyperspace jumps limit" => $this->hyperspaceJumpsLimit,
+            "Unlocked Map" => $this->unlockedMap ? "true" : "false",
         ];
     }
 
@@ -62,6 +70,10 @@ class Level
 
         if (array_key_exists("hyperspace-jumps-limit", $levelData)) {
             $this->hyperspaceJumpsLimit = $levelData["hyperspace-jumps-limit"];
+        }
+
+        if (array_key_exists("unlocked-map", $levelData)) {
+            $this->unlockedMap = $levelData["unlocked-map"];
         }
     }
 }

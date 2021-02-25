@@ -12,7 +12,7 @@ class HyperdriveNavigator
 {
     protected ?Planet $currentPlanet;
 
-    public function __construct(protected Route $route, protected int $hyperspaceJumpsLimit, protected bool $unlockedMap = false)
+    public function __construct(protected Route $route, protected int $hyperspaceJumpsLimit, protected bool $unlockedMap)
     {
     }
 
