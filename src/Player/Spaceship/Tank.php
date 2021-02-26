@@ -11,10 +11,16 @@ class Tank
     protected int $fuel;
     protected int $capacity;
     protected int $fuelConsumption;
+    protected int $fuelConsumed = 0;
 
     public function __construct(array $tankData)
     {
         $this->setTankData($tankData);
+    }
+
+    public function getFuelConsumed(): int
+    {
+        return $this->fuelConsumed;
     }
 
     public function setFuel(int $fuel): void
@@ -47,6 +53,7 @@ class Tank
             throw new Exception("You don't have enough fuel. You need to refuel");
         }
         $this->fuel -= $this->fuelConsumption;
+        $this->fuelConsumed += $this->fuelConsumption;
     }
 
     public function getTankData(): array
@@ -60,8 +67,8 @@ class Tank
             return $data;
         }
         return [
-            "fuel" => $this->fuel,
-        ] + $data;
+                "fuel" => $this->fuel,
+            ] + $data;
     }
 
     private function setTankData(array $tankData): void
