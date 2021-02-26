@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Player;
 
-use Hyperdrive\Player\FinalScore\FinalScore;
 use Hyperdrive\Galaxy\Geography\Planet;
 use Hyperdrive\Player\Capital\Capital;
+use Hyperdrive\Player\FinalScore\FinalScore;
 use Hyperdrive\Player\Navigator\HyperdriveNavigator;
 use Hyperdrive\Player\Navigator\HyperspaceJump;
 use Hyperdrive\Player\Pilot\Pilot;
@@ -71,7 +71,7 @@ class Player
         "Capital" => "int",
         "Target Planet" => "string",
         "Current Planet" => "string",
-        "Hyperspace Jumps Limit" => "int"
+        "Hyperspace Jumps Limit" => "int",
     ])]
     public function getPlayerData(): array
     {

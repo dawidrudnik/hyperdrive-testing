@@ -52,8 +52,8 @@ class Spaceship
     public function getSpaceshipData(): array
     {
         return [
-                "name" => $this->name,
-            ] + $this->tank->getTankData();
+            "name" => $this->name,
+        ] + $this->tank->getTankData();
     }
 
     private function setSpaceshipData(array $spaceshipData): void

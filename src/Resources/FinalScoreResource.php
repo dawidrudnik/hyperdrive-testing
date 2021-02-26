@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hyperdrive\Panels\Resources;
+namespace Hyperdrive\Resources;
 
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -10,7 +10,7 @@ class FinalScoreResource
 {
     #[ArrayShape([
         "Name" => "string",
-        "Value" => "int"
+        "Value" => "int",
     ])]
     public function __invoke(string $name, int $value): array
     {

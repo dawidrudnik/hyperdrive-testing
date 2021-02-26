@@ -67,8 +67,8 @@ class Tank
             return $data;
         }
         return [
-                "fuel" => $this->fuel,
-            ] + $data;
+            "fuel" => $this->fuel,
+        ] + $data;
     }
 
     private function setTankData(array $tankData): void

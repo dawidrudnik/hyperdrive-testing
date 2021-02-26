@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Hyperdrive\Panels;
 
-use Hyperdrive\Panels\Resources\FinalScoreResource;
 use Hyperdrive\Player\Player;
+use Hyperdrive\Resources\FinalScoreResource;
 
 class FinalScorePanel extends BasePanel
 {
@@ -17,11 +17,11 @@ class FinalScorePanel extends BasePanel
     public function show(): void
     {
         $collection = collect();
-        $baseResource = new FinalScoreResource();
+        $finalScoreResource = new FinalScoreResource();
         $finalScore = $this->player->getFinalScore();
 
         foreach ($finalScore->getFinalScore() as $name => $value) {
-            $collection->add($baseResource($name, $value));
+            $collection->add($finalScoreResource($name, $value));
         }
 
         $this->cli->table($collection->toArray());
