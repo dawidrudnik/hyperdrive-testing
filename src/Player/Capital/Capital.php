@@ -31,6 +31,7 @@ class Capital
     }
 
     /**
+     * @param int $charge
      * @throws Exception
      */
     public function isThereEnoughMoney(int $charge): void

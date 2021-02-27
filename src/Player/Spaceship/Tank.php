@@ -18,6 +18,21 @@ class Tank
         $this->setTankData($tankData);
     }
 
+    public function getFuel(): int
+    {
+        return $this->fuel;
+    }
+
+    public function getCapacity(): int
+    {
+        return $this->capacity;
+    }
+
+    public function getFuelConsumption(): int
+    {
+        return $this->fuelConsumption;
+    }
+
     public function getFuelConsumed(): int
     {
         return $this->fuelConsumed;
@@ -34,6 +49,7 @@ class Tank
     }
 
     /**
+     * @param int $fillingRate
      * @throws Exception
      */
     public function refueling(int $fillingRate): void
@@ -54,21 +70,6 @@ class Tank
         }
         $this->fuel -= $this->fuelConsumption;
         $this->fuelConsumed += $this->fuelConsumption;
-    }
-
-    public function getTankData(): array
-    {
-        $data = [
-            "capacity" => $this->capacity,
-            "fuelConsumption" => $this->fuelConsumption,
-        ];
-
-        if ($this->fuel === 0) {
-            return $data;
-        }
-        return [
-            "fuel" => $this->fuel,
-        ] + $data;
     }
 
     private function setTankData(array $tankData): void

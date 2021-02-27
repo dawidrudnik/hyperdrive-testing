@@ -7,6 +7,8 @@ namespace Hyperdrive\Panels;
 use Hyperdrive\Contracts\PanelContract;
 use Hyperdrive\Panels\Options\MoreOptions;
 use Hyperdrive\Player\Player;
+use Hyperdrive\Resources\PlayerResource;
+use Hyperdrive\Resources\Spaceship\SpaceshipResource;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class MorePanel extends BasePanel implements PanelContract
@@ -24,6 +26,7 @@ class MorePanel extends BasePanel implements PanelContract
     }
 
     /**
+     * @param string $result
      * @throws Exception
      */
     private function checkResult(string $result): void
@@ -34,10 +37,12 @@ class MorePanel extends BasePanel implements PanelContract
                 $priceListPanel->show();
                 break;
             case "spaceship":
-                $this->cli->table([$this->player->getSpaceshipData()]);
+                $spaceshipResource = new SpaceshipResource();
+                $this->cli->table([$spaceshipResource($this->player->getSpaceship())]);
                 break;
             case "player":
-                $this->cli->table([$this->player->getPlayerData()]);
+                $playerResource = new PlayerResource();
+                $this->cli->table([$playerResource($this->player)]);
                 break;
             case "refueling":
                 try {

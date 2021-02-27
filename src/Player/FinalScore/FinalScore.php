@@ -21,7 +21,7 @@ class FinalScore
         "Completed Hyperspace Jumps" => "int",
         "Fuel consumed" => "int",
     ])]
-    public function getFinalScore(): array
+    public function generate(): array
     {
         return [
             "Capital Spent" => $this->capital->getCapitalSpent(),
