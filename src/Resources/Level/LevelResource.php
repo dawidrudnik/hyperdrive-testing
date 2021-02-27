@@ -13,8 +13,8 @@ class LevelResource
         "Difficulty Level" => "string",
         "Fuel" => "int",
         "Capital" => "int",
-        "Hyperspace jumps limit" => "int",
-        "Unlocked Map" => "string"
+        "Hyperspace Jumps Limit" => "int",
+        "Unlocked Map" => "string",
     ])]
     public function __invoke(Level $level): array
     {
@@ -22,7 +22,7 @@ class LevelResource
             "Difficulty Level" => $level->__toString(),
             "Fuel" => $level->getFuel(),
             "Capital" => $level->getCapital(),
-            "Hyperspace jumps limit" => $level->getHyperspaceJumpsLimit(),
+            "Hyperspace Jumps Limit" => $level->getHyperspaceJumpsLimit(),
             "Unlocked Map" => $level->isUnlockedMap() ? "true" : "false",
         ];
     }

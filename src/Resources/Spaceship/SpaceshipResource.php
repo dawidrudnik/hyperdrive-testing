@@ -13,7 +13,7 @@ class SpaceshipResource
         $tankResource = new TankResource();
 
         return [
-                "Name" => $spaceship->__toString(),
-            ] + $tankResource($spaceship->getTank());
+            "Name" => $spaceship->__toString(),
+        ] + $tankResource($spaceship->getTank());
     }
 }

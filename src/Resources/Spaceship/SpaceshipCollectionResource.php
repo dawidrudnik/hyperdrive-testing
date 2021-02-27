@@ -18,6 +18,7 @@ class SpaceshipCollectionResource
         foreach ($collection as $spaceship) {
             $data[] = $spaceshipResource($spaceship);
         }
+
         return $data;
     }
 }

@@ -10,6 +10,10 @@ use Symfony\Component\Yaml\Yaml;
 
 class LevelsBuilder implements BuilderContract
 {
+    protected function __construct()
+    {
+    }
+
     public static function buildFromArray(array $data): Collection
     {
         $levels = collect();

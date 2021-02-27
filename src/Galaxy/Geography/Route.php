@@ -50,8 +50,6 @@ class Route
     }
 
     /**
-     * @param string $name
-     * @return Planet
      * @throws Exception
      */
     public function getPlanetByName(string $name): Planet
@@ -66,8 +64,6 @@ class Route
     }
 
     /**
-     * @param int $id
-     * @return Planet
      * @throws Exception
      */
     public function getPlanetById(int $id): Planet

@@ -39,14 +39,14 @@ class HyperspaceJumpPanel extends BasePanel implements PanelContract
      */
     private function selectPlanet(): Planet
     {
-        $collection = $this->hyperspaceJump->getMatchingPlanets();
+        $matchingPlanets = $this->hyperspaceJump->getMatchingPlanets();
 
-        if ($collection->count() !== 1) {
-            return $this->cli->radio("Select planet to hyperspace jump", $collection->toArray())->prompt();
+        if ($matchingPlanets->count() !== 1) {
+            return $this->cli->radio("Select planet to hyperspace jump", $matchingPlanets->toArray())->prompt();
         }
 
-        /** @var Planet $planet **/
-        $planet = $collection->get(0);
+        /** @var Planet $planet */
+        $planet = $matchingPlanets->get(0);
 
         $this->cli->error("Only one planet meets the requirements for a hyperspace jump");
         $result = $this->cli->radio("Do you want to jump to {$planet}", ["Yes", "No"])->prompt();

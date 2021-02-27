@@ -19,7 +19,7 @@ class FinalScore
         "Capital Spent" => "int",
         "Visited Planets" => "int",
         "Completed Hyperspace Jumps" => "int",
-        "Fuel consumed" => "int",
+        "Fuel Consumed" => "int",
     ])]
     public function generate(): array
     {
@@ -27,7 +27,7 @@ class FinalScore
             "Capital Spent" => $this->capital->getCapitalSpent(),
             "Visited Planets" => $this->hyperdriveNavigator->getVisitedPlanets(),
             "Completed Hyperspace Jumps" => $this->hyperdriveNavigator->getCompletedHyperspaceJumps(),
-            "Fuel consumed" => $this->spaceship->getFuelConsumed(),
+            "Fuel Consumed" => $this->spaceship->getFuelConsumed(),
         ];
     }
 }

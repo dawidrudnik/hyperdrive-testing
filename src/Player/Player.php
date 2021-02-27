@@ -43,7 +43,7 @@ class Player
     }
 
     #[Pure]
-    public function getCurrentPlanet(): Planet
+    public function getCurrentPlanet(): ?Planet
     {
         return $this->hyperdriveNavigator->getCurrentPlanet();
     }

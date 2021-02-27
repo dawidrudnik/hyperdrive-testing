@@ -20,7 +20,7 @@ class TankResource
         }
 
         return [
-                "Fuel" => $tank->getFuel(),
-            ] + $data;
+            "Fuel" => $tank->getFuel(),
+        ] + $data;
     }
 }

@@ -14,7 +14,7 @@ class PlayerResource
         "Capital" => "int",
         "Target Planet" => "string",
         "Current Planet" => "string",
-        "Hyperspace Jumps Limit" => "int"
+        "Hyperspace Jumps Limit" => "int",
     ])]
     public function __invoke(Player $player): array
     {

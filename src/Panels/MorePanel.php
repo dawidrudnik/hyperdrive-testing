@@ -26,7 +26,6 @@ class MorePanel extends BasePanel implements PanelContract
     }
 
     /**
-     * @param string $result
      * @throws Exception
      */
     private function checkResult(string $result): void
